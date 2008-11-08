@@ -1,6 +1,7 @@
 
 
 import System.UUID.V1
+import System.UUID.Bytes
 
 import Numeric
 import Text.Printf
@@ -8,5 +9,5 @@ import Text.Printf
 
 main                         =  do
   uuid                      <-  uuid
-  putStrLn $ concatMap (printf "%02.2x") uuid
+  print uuid
 
