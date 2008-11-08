@@ -21,7 +21,10 @@ import Foreign
 
 #ifdef mingw32_HOST_OS
 
-uuid                         =  undefined
+uuid                         =  runAndRead c
+
+foreign import ccall unsafe "UuidCreateSequential"
+  c                         ::  Ptr CChar -> IO ()
 
 #else
 
