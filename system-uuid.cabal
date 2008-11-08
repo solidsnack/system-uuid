@@ -1,0 +1,26 @@
+name:               system-uuid
+version:            0.0.0
+category:           System
+license:            BSD3
+license-file:       LICENSE
+author:             Jason Dusek
+maintainer:         jason.dusek@gmail.com
+synopsis:           Get UUIDs from the system.
+description:
+  Bindings to the native UUID generator for a number of platforms.
+
+
+cabal-version:      >= 1.6
+build-type:         Simple
+extra-source-files:   README
+                    , CONTRIBUTORS
+
+
+library
+  build-depends:      base
+  exposed-modules:  System.UUID
+
+
+executable          uuidgen-is-so-much-better-in-haskell-you-can-not-believe-it
+  main-is:          Main.hs
+
