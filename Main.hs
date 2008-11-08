@@ -1,0 +1,5 @@
+
+
+main                         =  do
+  putStrLn "woot!"
+
