@@ -1,5 +1,12 @@
 
 
+import System.UUID.V1
+
+import Numeric
+import Text.Printf
+
+
 main                         =  do
-  putStrLn "woot!"
+  uuid                      <-  uuid
+  putStrLn $ concatMap (printf "%02.2x") uuid
 

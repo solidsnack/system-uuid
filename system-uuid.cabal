@@ -18,14 +18,13 @@ extra-source-files            : README
 
 library
   build-depends               : base 
-  exposed-modules             : System.UUID
+  exposed-modules             : System.UUID.V1
 
   if os(linux)
     extra-libraries           : uuid
 
-  extensions                  : CPP
-
-
+  extensions                  : ForeignFunctionInterface
+                                CPP
 
 executable                      hooty
   main-is                     : Main.hs
@@ -33,5 +32,6 @@ executable                      hooty
   if os(linux)
     extra-libraries           : uuid
 
-  extensions                  : CPP
+  extensions                  : ForeignFunctionInterface
+                                CPP
 
