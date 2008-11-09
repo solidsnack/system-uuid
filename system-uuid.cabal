@@ -32,6 +32,9 @@ executable                      hooty
   if os(linux)
     extra-libraries           : uuid
 
+  if os(mingw32)
+    extra-libraries           : rpcrt4
+
   extensions                  : ForeignFunctionInterface
                                 CPP
 

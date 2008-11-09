@@ -21,6 +21,9 @@ import Foreign
 
 #ifdef mingw32_HOST_OS
 
+{-# INCLUDE <Rpc.h>
+  #-}
+
 uuid                         =  runAndRead c
 
 foreign import ccall unsafe "UuidCreateSequential"
