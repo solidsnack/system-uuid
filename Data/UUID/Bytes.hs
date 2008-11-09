@@ -1,20 +1,13 @@
 
-{-| Utilities for fetching the bytes from foreign computations.
+{-| A 'UUID' as plain old bytes.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 
-{-# LANGUAGE ForeignFunctionInterface
-  #-}
-
-module System.UUID.Bytes
+module Data.UUID.Bytes
   ( UUID(..)
-  , runAndRead
+  , listOfBytes
   ) where
 
 
-import Foreign.C.String
-import Foreign.C
-import Foreign.ForeignPtr
-import Foreign
 import Data.Word
 import Data.List
 import Text.Printf
@@ -32,13 +25,7 @@ instance Show UUID where
 instance Eq UUID
 instance Ord UUID
 
-runAndRead                  ::  (Ptr CChar -> IO ()) -> IO UUID 
-runAndRead cProcedure        =  do
-  fp                        <-  mallocForeignPtrArray 16
-  withForeignPtr fp cProcedure 
-  bytes                     <-  withForeignPtr fp $ peekArray 16 . castPtr
-  let
-    [x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF]
-      = bytes
-  return $ UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF
+
+listOfBytes (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
+  = [ x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF ]
 

@@ -11,30 +11,24 @@ module System.UUID.V1
   ) where
 
 
-import System.UUID.Bytes
+import System.UUID.FromForeign
 
-import Foreign.C.String
 import Foreign.C
-import Foreign.ForeignPtr
-import Foreign
+import Foreign.Ptr
+
+
+uuid                         =  runAndRead native
 
 
 #ifdef mingw32_HOST_OS
 
-{-# INCLUDE <Rpc.h>
-  #-}
-
-uuid                         =  runAndRead c
-
-foreign import ccall unsafe "UuidCreateSequential"
-  c                         ::  Ptr CChar -> IO ()
+foreign import stdcall unsafe "UuidCreateSequential"
+  native                    ::  Ptr CChar -> IO ()
 
 #else
 
-uuid                         =  runAndRead c
-
 foreign import ccall unsafe "uuid_generate_time"
-  c                         ::  Ptr CChar -> IO ()
+  native                    ::  Ptr CChar -> IO ()
 
 #endif
 
