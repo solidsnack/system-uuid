@@ -19,6 +19,8 @@ extra-source-files            : README
 library
   build-depends               : base 
   exposed-modules             : System.UUID.V1
+                                System.UUID.FromForeign
+                                Data.UUID.Bytes
 
   if os(linux)
     extra-libraries           : uuid
