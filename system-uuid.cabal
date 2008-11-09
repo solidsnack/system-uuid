@@ -18,7 +18,12 @@ extra-source-files            : README
 
 library
   build-depends               : base 
+                              , containers
+                              , regex-compat
+                              , template-haskell
+                              , parsec
   exposed-modules             : System.UUID.V1
+                                System.UUID.V4
                                 System.UUID.FromForeign
                                 Data.UUID.Bytes
 
@@ -26,6 +31,8 @@ library
     extra-libraries           : uuid
 
   extensions                  : ForeignFunctionInterface
+                                TemplateHaskell
+                                PatternGuards
                                 CPP
 
 executable                      hooty
@@ -38,5 +45,7 @@ executable                      hooty
     extra-libraries           : rpcrt4
 
   extensions                  : ForeignFunctionInterface
+                                TemplateHaskell
+                                PatternGuards
                                 CPP
 
