@@ -1,3 +1,22 @@
 
-  Tentatively, my strategy is just to throw a lot of CPP at it.
+  Things that worked as expected:
+
+ .  The preprocessor -- I just copied from System.Directory and everything
+    worked as expected.
+
+ .  The foreign imports.
+
+  Things that I had to adjust:
+
+ .  When importing Windows library functions, you need to use `stdcall` and
+    `ccall` -- the calling convention is different for Windows.
+
+ .  When specifying a library, it is no good to use the names given on MSDN,
+    because GHC ships with GCC and a bunch of GNU-ified Windows libs. I ended
+    up using `rpcrt4` instead of `Rpcrt4.lib`, for example.
+
+  Things that were simpler than expected:
+
+ .  I did not need to inclue any header files at all.
+
 
