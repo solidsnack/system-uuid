@@ -15,6 +15,9 @@ cabal-version                 : >= 1.2
 build-type                    : Simple
 extra-source-files            : README
                                 CONTRIBUTORS
+                                Options.hs
+                                Macros.hs
+                                Messages.hs
 
 
 library
