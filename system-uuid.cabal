@@ -5,7 +5,8 @@ license                       : BSD3
 license-file                  : LICENSE
 author                        : Jason Dusek
 maintainer                    : jason.dusek@gmail.com
-synopsis                      : Get UUIDs from the system.
+homepage                      : http://github.com/jsnx/system-uuid/
+synopsis                      : Bindings to system UUID functions.
 description                   :
   Bindings to the native UUID generator for a number of platforms.
 
@@ -26,13 +27,10 @@ library
                                 System.UUID.V4
                                 System.UUID.FromForeign
                                 Data.UUID.Bytes
-
   if os(linux)
     extra-libraries           : uuid
-
   if os(mingw32)
     extra-libraries           : rpcrt4
-
   extensions                  : ForeignFunctionInterface
                                 TemplateHaskell
                                 PatternGuards
@@ -40,13 +38,10 @@ library
 
 executable                      hooty
   main-is                     : Main.hs
-
   if os(linux)
     extra-libraries           : uuid
-
   if os(mingw32)
     extra-libraries           : rpcrt4
-
   extensions                  : ForeignFunctionInterface
                                 TemplateHaskell
                                 PatternGuards
