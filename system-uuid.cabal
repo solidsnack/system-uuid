@@ -1,5 +1,5 @@
 name                          : system-uuid
-version                       : 0.0.0
+version                       : 0.0.1
 category                      : System
 license                       : BSD3
 license-file                  : LICENSE
@@ -17,6 +17,7 @@ extra-source-files            : README
                                 CONTRIBUTORS
                                 Options.hs
                                 Macros.hs
+                                MacroMacros.hs
                                 Messages.hs
 
 
