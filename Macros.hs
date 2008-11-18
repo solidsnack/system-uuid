@@ -9,9 +9,12 @@
 module Macros where
 
 
+import MacroMacros
+
 import Language.Haskell.TH
 import Language.Haskell.TH.Syntax
 import Data.List
+import Control.Applicative
 import Text.Regex
 
 
@@ -23,9 +26,9 @@ pullFile f                   =  lift =<< runIO (readFile f)
 {-| Extract the usage from the module we're in and put it here.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 usage                        =  lift =<< do
-  mod                       <-  currentModule
+  p                         <-  $(presentFile)
   runIO $ do
-    s                       <-  readFile $ fileName mod
+    s                       <-  readFile p
     return $ extractUsage s 
  where
   fileName mod               =  map replace mod ++ ".hs"
@@ -45,10 +48,9 @@ extractUsage s               =
   r <//> s                   =  matchRegex (mkRegexWithOpts r False True) s
   regex = ".*\\{-([\t -]*\n)+([ \t]+(SYNOPSIS|USAGE))(.+)\n[-\t ]*-\\}"
 
+
  -- normalizeLeadingEmptyLines
 normalizeLeadingEmpties      =  ('\n':) . dropWhile (`elem` "\n \t")
 normalizeEmptyLines''        =  reverse . normalizeLeadingEmpties . reverse
-
-
 
 
