@@ -8,7 +8,8 @@ maintainer                    : jason.dusek@gmail.com
 homepage                      : http://github.com/jsnx/system-uuid/
 synopsis                      : Bindings to system UUID functions.
 description                   :
-  Bindings to the native UUID generator for a number of platforms.
+  Bindings to the native UUID generator for a number of platforms. Please
+  contact the author if your platform is not supported.
 
 
 cabal-version                 : >= 1.2
