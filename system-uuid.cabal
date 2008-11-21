@@ -1,5 +1,5 @@
 name                          : system-uuid
-version                       : 0.0.1
+version                       : 1.0.0
 category                      : System
 license                       : BSD3
 license-file                  : LICENSE
@@ -25,13 +25,14 @@ extra-source-files            : README
 library
   build-depends               : base 
                               , containers
+                              , binary
                               , regex-compat
                               , template-haskell
                               , parsec
   exposed-modules             : System.UUID.V1
                                 System.UUID.V4
                                 System.UUID.FromForeign
-                                Data.UUID.Bytes
+                                Data.UUID
   if os(linux)
     extra-libraries           : uuid
   if os(mingw32)

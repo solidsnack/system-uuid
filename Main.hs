@@ -51,7 +51,7 @@ main                         =  do
     stdout << usage
     exitWith ExitSuccess
   when (all (isJust . lk) ["1","4"]) $ do
-    bail "Please specify either version 1 or version 4."
+    bail "Please specify either version 1 or version 4, not both."
   let
     n :: Word
     n                        =  fromMaybe 1 $ maybeRead =<< lk "n"

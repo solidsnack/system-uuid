@@ -10,7 +10,7 @@ module System.UUID.FromForeign
   ) where
 
 
-import Data.UUID.Bytes
+import Data.UUID
 
 import Foreign.C
 import Foreign.ForeignPtr
@@ -24,9 +24,5 @@ runAndRead                  ::  (Ptr CChar -> IO ()) -> IO UUID
 runAndRead procedure         =  do
   fp                        <-  mallocForeignPtrArray 16
   withForeignPtr fp procedure 
-  bytes                     <-  withForeignPtr fp $ peekArray 16 . castPtr
-  let
-    [x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF]
-      = bytes
-  return $ UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF
+  withForeignPtr fp $ peek . castPtr
 
