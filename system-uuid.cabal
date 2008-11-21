@@ -15,6 +15,7 @@ description                   :
 cabal-version                 : >= 1.2
 build-type                    : Simple
 extra-source-files            : README
+                                ACKNOWLDEGMENTS
                                 CONTRIBUTORS
                                 Options.hs
                                 Macros.hs
