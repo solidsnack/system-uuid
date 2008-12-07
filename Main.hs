@@ -24,6 +24,9 @@
     -h, -?, --help
         Print this help and exit.
 
+    --version
+        Print version and exit.
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 
 {-# LANGUAGE TemplateHaskell
@@ -50,10 +53,13 @@ main                         =  do
   when (isJust $ lk "h") $ do
     stdout << usage
     exitWith ExitSuccess
+  when (isJust $ lk "version") $ do
+    stdout << version
+    exitWith ExitSuccess
   when (all (isJust . lk) ["1","4"]) $ do
     bail "Please specify either version 1 or version 4, not both."
   let
-    n :: Word
+    n                       ::  Word
     n                        =  fromMaybe 1 $ maybeRead =<< lk "n"
     gen =
       if isJust $ lk "4"
@@ -70,6 +76,8 @@ bail s                       =  do
 
 
 usage                        =  $(Macros.usage)
+
+version                      =  "hooty-" ++ $(Macros.version)
 
 
 opts                         =  do
@@ -102,6 +110,7 @@ options'                     =  do
           , fmap (Map.insert o) anyString
           ]
     | otherwise              =  prb $ "unimplemented option '" ++ o ++ "'"
+  opt "version"              =  return $ Map.insert "version" ""
   opt o                      =  prb $ "unimplemented option '" ++ o ++ "'"
   prb s                      =  fail $ "Please report a bug -- " ++ s ++ "."
   opts                       =  map try
@@ -109,6 +118,7 @@ options'                     =  do
     , option    "1"             ["sequential"]
     , option    "4"             ["random"]
     , option    "n"             ["number"]
+    , option    ""              ["version"]
     ] ++ [ fail "Invalid option." ]
 
 

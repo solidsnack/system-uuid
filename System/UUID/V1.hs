@@ -1,6 +1,6 @@
 
-{-| Obtain a Version 1 UUID from the system. 
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+{-| Version 1 'UUID' utilities. 
+ -}
 
 {-# LANGUAGE ForeignFunctionInterface
            , CPP
@@ -17,6 +17,8 @@ import Foreign.C
 import Foreign.Ptr
 
 
+{-| Obtain a Version 1 'UUID' with the native 'UUID' generator. 
+ -}
 uuid                         =  runAndRead native
 
 

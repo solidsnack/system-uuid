@@ -1,6 +1,6 @@
 
 {-| Utilities for fetching the results from foreign functions. 
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+ -}
 
 {-# LANGUAGE ForeignFunctionInterface
   #-}
@@ -17,9 +17,9 @@ import Foreign.ForeignPtr
 import Foreign
 
 
-{-| Allocate a pointer to capture the output of a foreign function, run the
- -  function and interpret the sixteen bytes following the pointer as a UUID.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+{-| Allocates a pointer to capture the output of a foreign function, runs the
+    function and interprets the sixteen bytes following the pointer as a UUID.
+ -}
 runAndRead                  ::  (Ptr CChar -> IO ()) -> IO UUID 
 runAndRead procedure         =  do
   fp                        <-  mallocForeignPtrArray 16

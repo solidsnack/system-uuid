@@ -1,6 +1,6 @@
 
-{-| A 'UUID' and its many instances. 
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+{-| The 'UUID' datatype.
+ -}
 
 module Data.UUID
   ( UUID()
@@ -26,11 +26,15 @@ import Data.List
 import Text.Printf
 
 
+{-| A type for Uniform Unique Identifiers. The 'Num' instance allows 'UUID's
+    to be specified with @0@, @1@, &c. -- testing for the null 'UUID' is
+    easier that way. The 'Storable' instance is compatible with most (all?)
+    systems' native representation of 'UUID's.
+ -}
 data UUID                    =  UUID
   !Word8 !Word8 !Word8 !Word8 !Word8 !Word8 !Word8 !Word8
   !Word8 !Word8 !Word8 !Word8 !Word8 !Word8 !Word8 !Word8
-instance Eq UUID
-instance Ord UUID
+ deriving (Eq, Ord)
 instance Show UUID where
   show (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
     = printf formatUUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF
@@ -65,7 +69,7 @@ instance Storable UUID where
 instance Num UUID where
   fromInteger i             --  This really should be in a different class.
     | i <= 0                 =  UUID  0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
-    | i > 2^128              =  UUID  0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
+    | i >= 2^128             =  UUID  0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
     | otherwise              =  fromList bytes 
    where
     bytes                    =  map shifter $ reverse [0,8..15*8]
