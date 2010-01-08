@@ -24,7 +24,7 @@ extra-source-files            : README
 
 
 library
-  build-depends               : base 
+  build-depends               : base <= 4
                               , containers
                               , binary
                               , regex-compat
