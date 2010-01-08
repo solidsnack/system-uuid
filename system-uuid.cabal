@@ -4,8 +4,8 @@ category                      : System
 license                       : BSD3
 license-file                  : LICENSE
 author                        : Jason Dusek
-maintainer                    : jason.dusek@gmail.com
-homepage                      : http://github.com/jsnx/system-uuid/
+maintainer                    : system-uuid@solidsnack.be
+homepage                      : http://github.com/solidsnack/system-uuid/
 synopsis                      : Bindings to system UUID functions.
 description                   :
   Bindings to the native UUID generator for a number of platforms. Please
