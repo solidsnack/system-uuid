@@ -12,6 +12,7 @@ module System.UUID.V4
 
 
 import System.UUID.FromForeign
+import Data.UUID (UUID)
 
 import Foreign.C
 import Foreign.Ptr
@@ -19,6 +20,7 @@ import Foreign.Ptr
 
 {-| Obtain a Version 4 'UUID' with the native 'UUID' generator. 
  -}
+uuid                        ::  IO UUID
 uuid                         =  runAndRead native
 
 

@@ -1,5 +1,5 @@
 name                          : system-uuid
-version                       : 1.1.0
+version                       : 1.2.0
 category                      : System
 license                       : BSD3
 license-file                  : LICENSE
@@ -30,10 +30,10 @@ library
                               , regex-compat
                               , template-haskell
                               , parsec
+                              , uuid >= 1.0 && < 1.3
   exposed-modules             : System.UUID.V1
                                 System.UUID.V4
                                 System.UUID.FromForeign
-                                Data.UUID
   if os(linux)
     extra-libraries           : uuid
   if os(mingw32)
