@@ -15,7 +15,6 @@ import Language.Haskell.TH
 import Language.Haskell.TH.Syntax
 import Data.List
 import Control.Applicative
-import Text.Regex
 
 
 {-| Just a macro to pull in a file.
@@ -28,12 +27,12 @@ pullFile f                   =  lift =<< runIO (readFile f)
 version                      =  lift =<< do
   runIO $ do
     s                       <-  readFile "system-uuid.cabal"
-    return $ case regex <//> s of
-      Just [_, _, c]        ->  c
-      _                     ->  ""
+    case filter version (lines s) of
+      v:_                   ->  return (break_version v)
+      [ ]                   ->  error "Could not find version :("
  where
-  regex
-    = ".*\nversion([\t ]*):([\t ]*)([[:digit:].]+)"
+  version line               =  "version" == take 7 line
+  break_version = snd . break (/= ' ') . drop 1 . snd . break (== ':')
 
 
 {-| Extract the usage from the module we're in and put it here.
@@ -54,18 +53,12 @@ usage                        =  lift =<< do
     treating all the text of the comment as the usage statement.
  -}
 extractUsage s               =
-  case regex <//> s of
-    Just [_, b, _, d]       ->  ('\n':) . normalizeEmptyLines'' $ b ++ d
-    _                       ->  ""
+  case (begins_with_USAGE |--| terminal_comment) (lines s) of
+    lines                   ->  unlines lines
+    [   ]                   ->  error "Could not find USAGE :("
  where
-  regex
-    = ".*\\{-([\t -]*\n)+([ \t]+(SYNOPSIS|USAGE))(.+)\n[-\t ]*-\\}"
+  a |--| b                   =  takeWhile (not . b) . dropWhile (not . a)
+  begins_with_USAGE line     =  " USAGE: " == take 8 line
+  terminal_comment line      =  "-}" == drop (length line - 2) line
 
-
- -- normalizeLeadingEmptyLines
-normalizeLeadingEmpties      =  ('\n':) . dropWhile (`elem` "\n \t")
-normalizeEmptyLines''        =  reverse . normalizeLeadingEmpties . reverse
-
-
-r <//> s                     =  matchRegex (mkRegexWithOpts r False True) s
 

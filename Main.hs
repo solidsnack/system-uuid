@@ -1,31 +1,20 @@
 {- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  SYNOPSIS
-    hooty (-1|-4)? (-n <number to make>)?
+ USAGE: hooty (-1|-4)? (-n <number to make>)?
 
-  DESCRIPTION
+  The `hooty` program generates any number of UUIDs (one by default), using
+  either the version 1 (time and MAC) or version 4 (random) algorithm (version
+  1 is the default). On all platforms, `hooty` uses the native implementation.
 
-    The `hooty` program generates any number of UUIDs (one by default), using
-    either the version 1 (time and MAC) or version 4 (random) algorithm
-    (version 1 is the default). On all platforms, `hooty` uses the native
-    implementation.
+    -n, --number <number>       Create <number> many UUIDs in one go.
 
-  OPTIONS
+    -1, --sequential            Create version 1 (time and MAC) UUIDs.
 
-    -n, --number <number>
-        Create such-and-such many UUIDs in one go.
+    -4, --random                Create version 4 (random) UUIDs.
 
-    -1, --sequential
-        Create UUIDs using the version 1 (time and MAC) algorithm.
+    -h, -?, --help              Print this help and exit.
 
-    -4, --random
-        Create UUIDs using the version 4 (random) algorithm.
-
-    -h, -?, --help
-        Print this help and exit.
-
-    --version
-        Print version and exit.
+    --version                   Print version and exit.
 
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 
