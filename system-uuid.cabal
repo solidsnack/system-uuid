@@ -12,7 +12,7 @@ description                   :
   contact the author if your platform is not supported.
 
 
-cabal-version                 : >= 1.2
+cabal-version                 : >= 1.2.3
 build-type                    : Simple
 extra-source-files            : README
                                 ACKNOWLEDGEMENTS
