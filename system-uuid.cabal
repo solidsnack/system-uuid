@@ -56,5 +56,6 @@ executable                      hooty
   extensions                  : ForeignFunctionInterface
                                 TemplateHaskell
                                 PatternGuards
+                                DeriveDataTypeable
                                 CPP
 
