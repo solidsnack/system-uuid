@@ -14,6 +14,7 @@ import Data.Binary
 import Data.Binary.Put
 import Data.Binary.Get
 import Data.Bits
+import Data.String
 import Data.Typeable
 import Foreign.C
 import Foreign.ForeignPtr
@@ -61,39 +62,28 @@ instance Read UUID where
       case readHex s of
         [(b, _)]            ->  return b
         _                   ->  pfail
+instance IsString UUID where
+  fromString                 =  read
 instance Storable UUID where
   sizeOf _                   =  16
   alignment _                =  4
   peek p                     =  do
     bytes                   <-  peekArray 16 $ castPtr p
     return $ fromList bytes
-  poke p uuid                =  pokeArray (castPtr p) $ listOfBytes uuid 
-instance Num UUID where
-  fromInteger i             --  This really should be in a different class.
-    | i <= 0                 =  UUID  0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
-    | i >= 2^128             =  UUID  0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
-    | otherwise              =  fromList bytes 
-   where
-    bytes                    =  map shifter $ reverse [0,8..15*8]
-     where
-      shifter n              =  fromInteger $ i `shiftR` (8 * n)
-  (+)                        =  undefined
-  (-)                        =  undefined
-  (*)                        =  undefined
-  negate                     =  undefined
-  abs                        =  undefined
-  signum                     =  undefined
+  poke p uuid                =  pokeArray (castPtr p) $ listOfBytes uuid
 instance Bounded UUID where
-  minBound                   =  0
-  maxBound                   =  2^128
+  minBound                   =  UUID 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+                                     0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+  maxBound                   =  UUID 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff
+                                     0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff
 instance Binary UUID where
-  put                        =  mapM_ putWord8 . listOfBytes 
-  get                        =  fromList <$> sequence (replicate 16 getWord8) 
+  put                        =  mapM_ putWord8 . listOfBytes
+  get                        =  fromList <$> sequence (replicate 16 getWord8)
 
 
 listOfBytes (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
   = [ x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF ]
 
 fromList [ x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF ]
-  = (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
-
+  = UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF
+fromList _                   =  minBound

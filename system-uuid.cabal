@@ -1,10 +1,10 @@
 name                          : system-uuid
-version                       : 1.4.0
+version                       : 2.0.0
 category                      : System
 license                       : BSD3
 license-file                  : LICENSE
 author                        : Jason Dusek
-maintainer                    : system-uuid@solidsnack.be
+maintainer                    : oss@solidsnack.be
 homepage                      : http://github.com/solidsnack/system-uuid/
 synopsis                      : Bindings to system UUID functions.
 description                   :
@@ -12,7 +12,7 @@ description                   :
   contact the author if your platform is not supported.
 
 
-cabal-version                 : >= 1.2.3
+cabal-version                 : >= 1.8.0.6
 build-type                    : Simple
 extra-source-files            : README
                                 ACKNOWLEDGEMENTS
@@ -24,12 +24,15 @@ extra-source-files            : README
 
 flag split-base
 
+flag cli   
+  description                 : Enable command line tool.
+  default                     : False
+
 library
   if flag(split-base)
-    build-depends : base >= 4 && < 5
+    build-depends             : base >= 4 && < 5
   else
-    build-depends : base < 4
-
+    build-depends             : base < 4
   build-depends               : containers
                               , binary
                               , template-haskell
@@ -49,6 +52,18 @@ library
 
 executable                      hooty
   main-is                     : Main.hs
+  if flag(cli)  
+    buildable                 : True
+  else
+    buildable                 : False
+  if flag(split-base)
+    build-depends : base >= 4 && < 5
+  else
+    build-depends : base < 4
+  build-depends               : containers
+                              , binary
+                              , template-haskell
+                              , parsec
   if os(linux)
     extra-libraries           : uuid
   if os(mingw32)
