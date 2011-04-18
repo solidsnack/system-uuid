@@ -1,5 +1,5 @@
 name                          : system-uuid
-version                       : 2.0.0
+version                       : 2.1.0
 category                      : System
 license                       : BSD3
 license-file                  : LICENSE
@@ -35,8 +35,10 @@ library
     build-depends             : base < 4
   build-depends               : containers
                               , binary
+                              , bytestring
                               , template-haskell
                               , parsec
+                              , murmur-hash
   exposed-modules             : System.UUID.V1
                                 System.UUID.V4
                                 System.UUID.FromForeign
@@ -62,8 +64,10 @@ executable                      hooty
     build-depends             : base < 4
   build-depends               : containers
                               , binary
+                              , bytestring
                               , template-haskell
                               , parsec
+                              , murmur-hash
   if os(linux)
     extra-libraries           : uuid
   if os(mingw32)

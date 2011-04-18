@@ -5,6 +5,8 @@
 
 module Data.UUID
   ( UUID()
+  , asWord64s
+  , asWord32s
   ) where
 
 
@@ -14,6 +16,9 @@ import Data.Binary
 import Data.Binary.Put
 import Data.Binary.Get
 import Data.Bits
+import qualified Data.ByteString.Lazy
+import Data.Digest.Murmur32
+import Data.Digest.Murmur64
 import Data.String
 import Data.Typeable
 import Foreign.C
@@ -79,6 +84,10 @@ instance Bounded UUID where
 instance Binary UUID where
   put                        =  mapM_ putWord8 . listOfBytes
   get                        =  fromList <$> sequence (replicate 16 getWord8)
+instance Hashable32 UUID where
+  hash32Add                  =  hash32Add . asWord32s
+instance Hashable64 UUID where
+  hash64Add                  =  hash64Add . asWord64s
 
 
 listOfBytes (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
@@ -87,3 +96,16 @@ listOfBytes (UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF)
 fromList [ x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, xA, xB, xC, xD, xE, xF ]
   = UUID x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 xA xB xC xD xE xF
 fromList _                   =  minBound
+
+asWord64s                   ::  UUID -> (Word64, Word64)
+asWord64s uuid               =  (decode front, decode back)
+ where
+  (front, back)              =  Data.ByteString.Lazy.splitAt 8 $ encode uuid
+
+asWord32s                   ::  UUID -> (Word32, Word32, Word32, Word32)
+asWord32s uuid = (decode front', decode front'', decode back', decode back'')
+ where
+  (front, back)              =  Data.ByteString.Lazy.splitAt 8 $ encode uuid
+  (front', front'')          =  Data.ByteString.Lazy.splitAt 4 front
+  (back', back'')            =  Data.ByteString.Lazy.splitAt 4 back
+
