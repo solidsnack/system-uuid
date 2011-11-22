@@ -51,6 +51,7 @@ instance Show UUID where
     b                        =  concat . (`replicate` "%02.2x%02.2x")
 instance Read UUID where
   readPrec                   =  lift $ do
+    skipSpaces
     [x0,x1,x2,x3]           <-  count 4 byte
     char '-'
     [x4,x5]                 <-  count 2 byte
